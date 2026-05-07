@@ -1,5 +1,8 @@
 from lib.search_utils import load_movies,load_stopwords
 import string
+from nltk import PorterStemmer
+
+stemmer = PorterStemmer()
 
 def clean_text(text):
     text = text.lower()
@@ -19,7 +22,9 @@ def tokenize_text(text):
 
     for tok in text.split():
         if _filter(tok):
-            res.append(tok)    
+            tok = stemmer.stem(tok)
+            res.append(tok) 
+
     return res
 
 def has_matching_token(query_tokens, movie_tokens):
